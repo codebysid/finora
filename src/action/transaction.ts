@@ -34,32 +34,38 @@ export async function addTransaction({
   }
 }
 
-export async function getAllTransactions(email: string | undefined | null) {
+export async function getAllTransactions(
+  email: string | undefined | null,
+  limit: number
+) {
   if (!email) throw new Error("No email provided");
   console.log("action", { email });
+  const pipeline: any[] = [
+    {
+      $match: {
+        createdBy: email,
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "createdBy",
+        foreignField: "email",
+        as: "result",
+      },
+    },
+    {
+      $unwind: {
+        path: "$result",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+  ];
+
+  if (limit > 0) pipeline.push({ $limit: limit });
   try {
     await connectToMongo();
-    const allTransactions = await Transaction.aggregate([
-      {
-        $match: {
-          createdBy: email,
-        },
-      },
-      {
-        $lookup: {
-          from: "users",
-          localField: "createdBy",
-          foreignField: "email",
-          as: "result",
-        },
-      },
-      {
-        $unwind: {
-          path: "$result",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-    ]);
+    const allTransactions = await Transaction.aggregate(pipeline);
     console.log({ allTransactions });
     if (allTransactions.length > 0)
       return JSON.parse(JSON.stringify(allTransactions));

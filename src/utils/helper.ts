@@ -20,3 +20,14 @@ export function getTotalAmount(transactions: any[], type: string) {
   console.log({ total });
   return total;
 }
+
+export function convertToReadableDate(date: String) {
+  const curDate = new Date(date.toString());
+
+  const formattedDate = curDate.toLocaleDateString("en-us", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
+  return formattedDate;
+}

@@ -1,5 +1,4 @@
 import Hero from "@/components/Hero";
-import LoginButton from "@/components/LoginButton";
 
 export default function Home() {
   return (

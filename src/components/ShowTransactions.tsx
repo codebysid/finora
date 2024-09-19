@@ -9,10 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { convertToINR, getTotalAmount } from "@/utils/helper";
-import ShowBalance from "./ShowBalance";
-import BalanceCard from "./BalanceCard";
-import { BadgeIndianRupee, MoveDownRight, MoveUpRight } from "lucide-react";
+import { Button } from "./ui/button";
+import TransactionCell from "./TransactionCell";
+import Link from "next/link";
 
 type TransactionT = {
   type: "Income" | "Expense";
@@ -20,6 +19,7 @@ type TransactionT = {
   amount: number;
   _id: ObjectId;
   createdBy: String;
+  createdAt: String;
   result: {
     email: string;
     name: string;
@@ -32,76 +32,54 @@ interface IShowTransaction {
 }
 
 function ShowTransactions({ transactions }: IShowTransaction) {
-  let expenses, income;
-  if (transactions && transactions.length > 0) {
-    expenses = getTotalAmount(transactions, "Expense");
-    income = getTotalAmount(transactions, "Income");
-    console.log({ expenses, income });
-  }
-
   return (
-    <div>
-      <div className=" flex flex-row gap-2 p-2 flex-wrap">
-        {expenses && (
-          <BalanceCard
-            title="Total Expenses"
-            amount={expenses}
-            icon={<MoveDownRight className=" text-red-500" />}
-          />
-        )}
-        {income && (
-          <BalanceCard
-            title="Total Income"
-            amount={income}
-            icon={<MoveUpRight className="text-green-500" />}
-          />
-        )}
-        {income && expenses && (
-          <BalanceCard
-            title={"Current Balance"}
-            amount={String(income - expenses)}
-            icon={<BadgeIndianRupee />}
-          />
+    <>
+      <div className="pt-10">
+        <div
+          className={`${
+            transactions && transactions.length <= 10 && "h-[47vh]"
+          } overflow-y-auto lg:px-8`}
+        >
+          {transactions && transactions.length > 0 ? (
+            <Table>
+              <TableCaption className="lg:text-xl">
+                A list of your transactions.
+              </TableCaption>
+              <TableHeader>
+                <TableRow className=" lg:text-3xl">
+                  <TableHead className="">Description</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions.map((transaction) => {
+                  return (
+                    <TransactionCell
+                      key={transaction.result.email}
+                      description={transaction.description}
+                      createdAt={transaction.createdAt}
+                      type={transaction.type}
+                      amount={Number(transaction.amount)}
+                    />
+                  );
+                })}
+              </TableBody>
+            </Table>
+          ) : (
+            <p>No transactions</p>
+          )}
+        </div>
+      </div>
+      <div className="flex justify-center items-center pt-4">
+        {transactions && transactions.length <= 10 && (
+          <Button variant="secondary" asChild>
+            <Link href="/allTransactions">View All Transactions</Link>
+          </Button>
         )}
       </div>
-      {transactions && transactions.length > 0 ? (
-        <Table>
-          <TableCaption>A list of your transactions.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="">Description</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {transactions.map((transaction) => {
-              return (
-                <TableRow key={transaction.result.email}>
-                  <TableCell className=" font-medium">
-                    {transaction.description}
-                  </TableCell>
-                  <TableCell
-                    className={`${
-                      transaction.type == "Income"
-                        ? "text-green-500"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {transaction.type}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {convertToINR(transaction.amount)}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      ) : (
-        <p>No transactions</p>
-      )}
-    </div>
+    </>
   );
 }
 

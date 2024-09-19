@@ -1,9 +1,10 @@
 import Dashboard from "@/components/Dashboard";
+import React from "react";
 
-async function page() {
+function page() {
   return (
     <div>
-      <Dashboard transactionLimit={10} allTransactions={false} />
+      <Dashboard transactionLimit={0} allTransactions />
     </div>
   );
 }

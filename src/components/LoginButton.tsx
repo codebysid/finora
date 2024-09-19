@@ -10,7 +10,7 @@ function LoginButton() {
 
   return (
     <form action={signInAction}>
-      <Button type="submit" size="lg">
+      <Button type="submit" size="lg" variant="secondary">
         Login with Google
       </Button>
     </form>

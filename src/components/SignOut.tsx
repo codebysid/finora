@@ -9,13 +9,11 @@ function SignOut() {
     await signOut({ redirectTo: "/" });
   };
   return (
-    <div>
-      <form action={signOutAction}>
-        <Button type="submit" size="sm" variant="ghost">
-          <LogOut />
-        </Button>
-      </form>
-    </div>
+    <form action={signOutAction}>
+      <Button variant="link">
+        <LogOut />
+      </Button>
+    </form>
   );
 }
 

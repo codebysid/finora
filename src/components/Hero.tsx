@@ -4,12 +4,11 @@ import Logo from "./Logo";
 
 function Hero() {
   return (
-    <div className="flex flex-col justify-center items-center h-full gap-5">
-      <Logo />
-      <p className="text-center lg:text-xl">
-        Finora helps you track expenses, set budgets, and achieve your financial
-        goals with ease
-      </p>
+    <div className="flex flex-col justify-center items-center h-full gap-5 grid-background">
+      <h2 className="flex flex-col justify-center items-center gap-2 text-4xl lg:text-8xl font-extrabold text-left">
+        <span>Manage your</span>
+        <span> expenses smoothly</span>
+      </h2>
       <LoginButton />
     </div>
   );
