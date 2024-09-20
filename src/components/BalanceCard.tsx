@@ -15,7 +15,7 @@ function BalanceCard({ title, amount, icon }: IBalanceCard) {
         {icon}
       </div>
       <p
-        className={`lg:text-4xl text-sm font-extrabold text-white 
+        className={`lg:text-4xl text-sm font-extrabold 
           ${title.includes("Expense") && "text-red-500"} 
           ${title.includes("Income") && "text-green-500"}`}
       >

@@ -97,3 +97,29 @@
     linear-gradient(hsl(221.2, 70%, 10%) 1px, transparent 1px);
   background-size: 40px 40px;
 }
+
+.rdp {
+  @apply w-60;
+}
+
+.rdp-dropdown_month > div[aria-hidden="true"],
+.rdp-dropdown_year > div[aria-hidden="true"] {
+  @apply hidden;
+}
+
+.rdp-caption_dropdowns {
+  @apply flex flex-col justify-around h-40;
+}
+
+.rdp-vhidden > div[role="presentation"] {
+  @apply text-xl;
+}
+
+.rdp-dropdown {
+  @apply rounded-lg outline-none p-1;
+  background-color: hsl(217.2 32.6% 17.5%);
+}
+
+table[role="grid"] {
+  @apply hidden;
+}

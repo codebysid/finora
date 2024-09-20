@@ -1,9 +1,9 @@
 import Dashboard from "@/components/Dashboard";
-import React from "react";
-
+import MonthPicker from "@/components/MonthPicker";
 function page() {
   return (
     <div>
+      <MonthPicker />
       <Dashboard transactionLimit={0} allTransactions />
     </div>
   );
