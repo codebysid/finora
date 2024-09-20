@@ -12,6 +12,7 @@ import {
 import { Button } from "./ui/button";
 import TransactionCell from "./TransactionCell";
 import Link from "next/link";
+import { getCurrentMonthAndYear } from "@/utils/helper";
 
 type TransactionT = {
   type: "Income" | "Expense";
@@ -32,6 +33,7 @@ interface IShowTransaction {
 }
 
 function ShowTransactions({ transactions }: IShowTransaction) {
+  const { month, year } = getCurrentMonthAndYear();
   return (
     <>
       <div className="pt-10">
@@ -75,7 +77,9 @@ function ShowTransactions({ transactions }: IShowTransaction) {
       <div className="flex justify-center items-center pt-4">
         {transactions && transactions.length <= 10 && (
           <Button variant="secondary" asChild>
-            <Link href="/allTransactions">View All Transactions</Link>
+            <Link href={`/allTransactions/${month}/${year}`}>
+              View All Transactions
+            </Link>
           </Button>
         )}
       </div>

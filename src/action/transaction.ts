@@ -36,10 +36,12 @@ export async function addTransaction({
 
 export async function getAllTransactions(
   email: string | undefined | null,
-  limit: number
+  limit: number,
+  month: number,
+  year: number
 ) {
   if (!email) throw new Error("No email provided");
-  console.log("action", { email });
+  console.log("all transaction params", { email, month, year });
   const pipeline: any[] = [
     {
       $match: {
@@ -63,6 +65,26 @@ export async function getAllTransactions(
   ];
 
   if (limit > 0) pipeline.push({ $limit: limit });
+  if (month && year && month > 1 && year > 1) {
+    pipeline.push(
+      {
+        $addFields: {
+          month: {
+            $month: "$createdAt",
+          },
+          year: {
+            $year: "$createdAt",
+          },
+        },
+      },
+      {
+        $match: {
+          month,
+          year,
+        },
+      }
+    );
+  }
   try {
     await connectToMongo();
     const allTransactions = await Transaction.aggregate(pipeline);

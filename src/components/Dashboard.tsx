@@ -2,19 +2,36 @@ import React from "react";
 import TransactionMetrics from "./TransactionMetrics";
 import ShowTransactions from "./ShowTransactions";
 import { auth } from "@/utils/auth";
-import { getAllTransactions } from "@/action/transaction";
+
+interface IDashboard {
+  allTransactions: boolean;
+  transactionLimit: number;
+  getAllTransactionAction: (
+    email: string | null | undefined,
+    limit: number,
+    month: number,
+    year: number
+  ) => Promise<any>;
+  month?: string;
+  year?: string;
+}
 
 const Dashboard = async ({
   allTransactions,
   transactionLimit,
-}: {
-  allTransactions: boolean;
-  transactionLimit: number;
-}) => {
+  getAllTransactionAction,
+  month,
+  year,
+}: IDashboard) => {
   const session = await auth();
   let res;
   try {
-    res = await getAllTransactions(session?.user?.email, transactionLimit);
+    res = await getAllTransactionAction(
+      session?.user?.email,
+      transactionLimit,
+      Number(month) || 0,
+      Number(year) || 0
+    );
   } catch (err) {
     console.log(err);
   }

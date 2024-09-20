@@ -3,26 +3,16 @@ import React from "react";
 import NavItem from "./NavItem";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "../components/ui/navigation-menu";
 
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Link from "next/link";
+import { getCurrentMonthAndYear } from "@/utils/helper";
 
 const navItemIconStyles = "w-6 h-6";
-const navItems = [
-  {
-    id: 4,
-    title: "All Transactions",
-    icon: <TableOfContents />,
-    link: "/allTransactions",
-  },
+const navItems = new Set([
   {
     id: 2,
     title: "Set Goal",
@@ -39,15 +29,22 @@ const navItems = [
     icon: <BadgePlus className={navItemIconStyles} />,
     link: "/add",
   },
-];
+]);
 
 function Navbar() {
+  const { month, year } = getCurrentMonthAndYear();
+  navItems.add({
+    id: 4,
+    title: "All Transactions",
+    icon: <TableOfContents />,
+    link: `/allTransactions/${month}/${year}`,
+  });
   return (
     <nav className="fixed bottom-0 lg:absolute lg:top-10 lg:h-max bg-secondary lg:bg-primary p-2 lg:left-[50%] lg:-translate-x-[50%] lg:rounded-full">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem className="flex flex-row items-center justify-around lg:justify-center lg:gap-6 w-[100vw] lg:w-[40%]">
-            {navItems.map((item) => {
+            {[...navItems].map((item) => {
               return (
                 <NavigationMenuLink key={item.id} asChild>
                   <Link href={item.link || "#"}>

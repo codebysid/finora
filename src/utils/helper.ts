@@ -31,3 +31,11 @@ export function convertToReadableDate(date: String) {
   });
   return formattedDate;
 }
+
+export function getCurrentMonthAndYear() {
+  const date = new Date();
+  return {
+    month: date.getMonth() + 1,
+    year: date.getFullYear(),
+  };
+}
