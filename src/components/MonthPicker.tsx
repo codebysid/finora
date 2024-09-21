@@ -12,6 +12,7 @@ import {
 import { PopoverClose } from "@radix-ui/react-popover";
 import { useRouter } from "next/navigation";
 import { CircleX } from "lucide-react";
+import { getCurrentMonthAndYear } from "@/utils/helper";
 
 function MonthPicker() {
   const [monthYear, setMonthYear] = useState<{ month: number; year: number }>({
@@ -69,13 +70,6 @@ function MonthPicker() {
           </Button>
         </PopoverContent>
       </Popover>
-      <p>
-        {monthYear.month > 0 && monthYear.year > 0 && (
-          <span>
-            Transactions of {monthYear.month} and {monthYear.year} below
-          </span>
-        )}
-      </p>
     </div>
   );
 }

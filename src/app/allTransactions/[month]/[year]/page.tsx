@@ -2,7 +2,7 @@ import { getAllTransactions } from "@/action/transaction";
 import Dashboard from "@/components/Dashboard";
 import MonthPicker from "@/components/MonthPicker";
 
-function page({ params }: { params: { month: string; year: string } }) {
+async function page({ params }: { params: { month: string; year: string } }) {
   const { month, year } = params;
   return (
     <div>

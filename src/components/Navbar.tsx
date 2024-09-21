@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { getCurrentMonthAndYear } from "@/utils/helper";
 
+const { month, year } = getCurrentMonthAndYear();
 const navItemIconStyles = "w-6 h-6";
 const navItems = new Set([
   {
@@ -29,18 +30,17 @@ const navItems = new Set([
     icon: <BadgePlus className={navItemIconStyles} />,
     link: "/add",
   },
-]);
-
-function Navbar() {
-  const { month, year } = getCurrentMonthAndYear();
-  navItems.add({
+  {
     id: 4,
     title: "All Transactions",
     icon: <TableOfContents />,
     link: `/allTransactions/${month}/${year}`,
-  });
+  },
+]);
+
+function Navbar() {
   return (
-    <nav className="fixed bottom-0 lg:absolute lg:top-10 lg:h-max bg-secondary lg:bg-primary p-2 lg:left-[50%] lg:-translate-x-[50%] lg:rounded-full">
+    <nav className="fixed bottom-0 lg:absolute lg:top-10 lg:h-max bg-secondary lg:bg-primary p-2 lg:left-[50%] lg:-translate-x-[50%] md:left-[40%] md:-translate-x-[40%] lg:rounded-full">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem className="flex flex-row items-center justify-around lg:justify-center lg:gap-6 w-[100vw] lg:w-[40%]">

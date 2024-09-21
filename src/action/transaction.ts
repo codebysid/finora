@@ -65,7 +65,7 @@ export async function getAllTransactions(
   ];
 
   if (limit > 0) pipeline.push({ $limit: limit });
-  if (month && year && month > 1 && year > 1) {
+  if (month && year && month != 0 && year != 0) {
     pipeline.push(
       {
         $addFields: {

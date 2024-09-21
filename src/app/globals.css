@@ -67,6 +67,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.input {
+  @apply lg:text-2xl lg:px-4 lg:py-6;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 2px;

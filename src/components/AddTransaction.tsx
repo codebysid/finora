@@ -1,8 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,11 +18,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select";
+} from "@/components/ui/select";
 import { addTransaction } from "@/action/transaction";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { z } from "zod";
 
 const formSchema = z.object({
   description: z.string().min(2).max(50),
@@ -32,8 +31,8 @@ const formSchema = z.object({
 });
 
 function AddTransaction() {
+  const [z, setZ] = useState(null);
   const session = useSession();
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,7 +52,6 @@ function AddTransaction() {
         toast("Transaction Added ✅");
       }
       form.reset();
-      router.push("/dash");
     } catch (err) {
       console.log(err);
       toast("Some error occurred 🙆");
@@ -63,7 +61,7 @@ function AddTransaction() {
   return (
     <div className=" flex justify-center items-center h-[80vh]">
       <div className=" flex flex-col justify-center items-center gap-10 h-[80vh]">
-        <h1 className=" text-2xl font-bold text-primary lg:text-4xl">
+        <h1 className=" text-2xl font-bold text-primary lg:text-6xl">
           Add transaction
         </h1>
         <Form {...form}>
