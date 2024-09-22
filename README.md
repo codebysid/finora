@@ -33,7 +33,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 ## Features
 
 - Add Transaction: User can add transaction as income or expense
-- Set Goal: User can set monthly goals to stay motivated
-- Set Budget for categories: User can set budgets for diferent categories. App will notify if any cateogry expenses passes it's budget
-
-- Goal and Budget Features are under development, which will surely get completed the next day
+- Set Budget for categories: User can set budgets. App will notify if any cateogry expenses passes it's budget
+- Filteration: User can filter transactions by selecting month and year
+- Metrics: User can view multiple metrics such as total expenses, income, current balance and mini budget notification on the dashboard
+- Google: User can simply sign in using Google account
