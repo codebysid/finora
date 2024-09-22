@@ -49,12 +49,12 @@ function AddTransaction() {
       });
       if (res?.status === 200) {
         form.reset();
-        toast("Transaction Added ✅");
+        return toast("Transaction Added ✅");
       }
-      toast("Not able to save transaction at the moment 😢");
+      return toast("Not able to save transaction at the moment 😢");
     } catch (err) {
       console.log(err);
-      toast("Some error occurred 🙆");
+      return toast("Some error occurred 🙆");
     }
   };
 

@@ -1,6 +1,8 @@
 "use server";
 import Transaction from "@/models/Transaction";
 import connectToMongo from "@/utils/connectToMongo";
+import { getCurrentMonthAndYear } from "@/utils/helper";
+import { revalidatePath } from "next/cache";
 
 export async function addTransaction({
   description,
@@ -17,6 +19,7 @@ export async function addTransaction({
     throw new Error("not enough info");
   }
   console.log({ description, amount, type }, "action");
+  const { month, year } = getCurrentMonthAndYear();
   try {
     await connectToMongo();
     const transaction = await Transaction.create({
@@ -25,8 +28,10 @@ export async function addTransaction({
       type,
       createdBy: email,
     });
-    if (transaction)
+    if (transaction) {
+      revalidatePath(`/allTransactions${month}/${year}`);
       return JSON.parse(JSON.stringify({ status: 200, message: "Successful" }));
+    }
     throw new Error("Can't access DB");
   } catch (err) {
     console.log(err);
@@ -62,6 +67,7 @@ export async function getAllTransactions(
         preserveNullAndEmptyArrays: true,
       },
     },
+    { $sort: { createdAt: -1 } },
   ];
 
   if (limit > 0) pipeline.push({ $limit: limit });
@@ -89,8 +95,9 @@ export async function getAllTransactions(
     await connectToMongo();
     const allTransactions = await Transaction.aggregate(pipeline);
     console.log({ allTransactions });
-    if (allTransactions.length > 0)
+    if (allTransactions.length > 0) {
       return JSON.parse(JSON.stringify(allTransactions));
+    }
     throw new Error("no transactions found");
   } catch (err) {
     console.log(err);

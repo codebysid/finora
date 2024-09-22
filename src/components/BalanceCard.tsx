@@ -12,8 +12,8 @@ function BalanceCard({ title, amount, icon, isBudgetCrossed }: IBalanceCard) {
   const formattedAmount = convertToINR(amount);
   return (
     <div
-      className={`px-3 py-4 lg:p-4 flex-1 rounded-lg flex flex-col gap-4 lg:gap-32 justify-between items-start bg-secondary ${
-        isBudgetCrossed && "bg-red-500 bg-opacity-40"
+      className={`px-3 py-4 lg:p-4 flex-1 rounded-lg flex flex-col gap-4 lg:gap-32 justify-between items-start ${
+        isBudgetCrossed ? "bg-red-500 bg-opacity-40" : "bg-secondary"
       }`}
     >
       <div className=" flex flex-row justify-between items-center w-full">
