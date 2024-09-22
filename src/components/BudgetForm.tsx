@@ -1,16 +1,5 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { ChangeEvent, Dispatch, useState } from "react";
 import {
   convertToINR,
   getCurrentMonthAndYear,
@@ -22,7 +11,11 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { setBudget as setBudgetAction } from "@/action/budget";
 
-function BudgetForm() {
+function BudgetForm({
+  setBudgetDialog,
+}: {
+  setBudgetDialog: Dispatch<boolean>;
+}) {
   const [budget, setBudget] = useState<number>(0);
   const auth = useSession();
 
@@ -40,8 +33,11 @@ function BudgetForm() {
         year,
         auth?.data?.user?.email
       );
-      if (res.status == 200) return toast("Budget Set 💸");
-      return toast("something went wrong, try again 🤦");
+      if (res.status == 200) {
+        setBudgetDialog(false);
+        return toast("Budget Set 💸");
+      }
+      return toast("not able to set budget at the moment 😢");
     } catch (err) {
       console.log(err);
       return toast("something went wrong, try again 🤦");
@@ -49,7 +45,10 @@ function BudgetForm() {
   };
 
   return (
-    <div>
+    <div className=" flex flex-col gap-3 ">
+      <h2>
+        Set your budget for {getMonthName(month)} {year}
+      </h2>
       <Input
         type="number"
         placeholder={convertToINR(3500)}

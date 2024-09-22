@@ -3,7 +3,7 @@ import LoginButton from "./LoginButton";
 
 function Hero() {
   return (
-    <div className="flex flex-col justify-center items-center h-full gap-5 grid-background">
+    <div className="flex flex-col justify-center items-center h-full gap-5 grid-background heroSection">
       <h2 className="flex flex-col justify-center items-center gap-2 text-4xl lg:text-8xl font-extrabold text-left">
         <span>Manage your</span>
         <span> expenses smoothly</span>

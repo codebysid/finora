@@ -48,9 +48,10 @@ function AddTransaction() {
         email: session.data?.user?.email,
       });
       if (res?.status === 200) {
+        form.reset();
         toast("Transaction Added ✅");
       }
-      form.reset();
+      toast("Not able to save transaction at the moment 😢");
     } catch (err) {
       console.log(err);
       toast("Some error occurred 🙆");

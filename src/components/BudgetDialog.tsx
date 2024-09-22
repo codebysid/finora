@@ -1,4 +1,5 @@
-import React, { ReactNode } from "react";
+"use client";
+import React, { ReactNode, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -18,9 +19,10 @@ export default function BudgetDialog({
   triggerText,
   triggerIcon,
 }: IBudgetDialog) {
+  const [budgetDialog, setBudgetDialog] = useState<boolean>(false);
   return (
     <div>
-      <Dialog>
+      <Dialog open={budgetDialog} onOpenChange={setBudgetDialog}>
         <DialogTrigger>
           {triggerIcon}
           {triggerText}
@@ -28,7 +30,7 @@ export default function BudgetDialog({
         <DialogContent>
           <DialogTitle></DialogTitle>
           <DialogHeader>
-            <BudgetForm />
+            <BudgetForm setBudgetDialog={setBudgetDialog} />
           </DialogHeader>
         </DialogContent>
       </Dialog>

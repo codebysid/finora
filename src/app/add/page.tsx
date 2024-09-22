@@ -1,4 +1,4 @@
-import { Loader } from "lucide-react";
+import Loader from "../../components/Loader";
 import dynamic from "next/dynamic";
 const AddTransaction = dynamic(
   () => import("../../components/AddTransaction"),
