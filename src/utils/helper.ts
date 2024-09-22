@@ -39,3 +39,12 @@ export function getCurrentMonthAndYear() {
     year: date.getFullYear(),
   };
 }
+
+export function getMonthName(monthNumber:number){
+  if(monthNumber>12 || monthNumber<0) return
+  const date=new Date()
+  date.setMonth(monthNumber-1)
+  return date.toLocaleString("en-us",{
+    month:"long"
+  })
+}

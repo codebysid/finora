@@ -1,8 +1,17 @@
 import React from "react";
 import BalanceCard from "./BalanceCard";
 import { ObjectId } from "mongoose";
-import { getTotalAmount } from "@/utils/helper";
-import { BadgeIndianRupee, MoveDownRight, MoveUpRight } from "lucide-react";
+import { getCurrentMonthAndYear, getTotalAmount } from "@/utils/helper";
+import {
+  BadgeIndianRupee,
+  HandCoins,
+  MoveDownRight,
+  MoveUpRight,
+} from "lucide-react";
+import { toast } from "sonner";
+import { getBudget } from "@/action/budget";
+import { auth } from "@/utils/auth";
+
 type TransactionT = {
   type: "Income" | "Expense";
   description: String;
@@ -21,7 +30,17 @@ interface IShowTransaction {
   transactions: TransactionT[];
 }
 
-function TransactionMetrics({ transactions }: IShowTransaction) {
+async function TransactionMetrics({ transactions }: IShowTransaction) {
+  const session = await auth();
+  const { month, year } = getCurrentMonthAndYear();
+  let budget = 0;
+  try {
+    const res = await getBudget(session?.user?.email, month, year);
+    if (res) budget = res?.budget;
+  } catch (err) {
+    console.log(err);
+    toast("something is wrong, try again");
+  }
   let expenses, income;
   if (transactions && transactions.length > 0) {
     expenses = getTotalAmount(transactions, "Expense");
@@ -34,36 +53,29 @@ function TransactionMetrics({ transactions }: IShowTransaction) {
         <BalanceCard
           title="Total Expenses"
           amount={expenses}
-          icon={
-            <MoveDownRight
-              className=" lg:h-10
-                lg:w-10"
-            />
-          }
+          icon={<MoveDownRight className=" metricsIcon" />}
         />
       )}
       {income > 1 && (
         <BalanceCard
           title="Total Income"
           amount={income}
-          icon={
-            <MoveUpRight
-              className=" lg:h-10
-                lg:w-10"
-            />
-          }
+          icon={<MoveUpRight className=" metricsIcon" />}
         />
       )}
       {income > 1 && expenses > 1 && (
         <BalanceCard
           title={"Current Balance"}
-          amount={String(income - expenses)}
-          icon={
-            <BadgeIndianRupee
-              className="lg:h-10
-                lg:w-10"
-            />
-          }
+          amount={income - expenses}
+          icon={<BadgeIndianRupee className="metricsIcon" />}
+        />
+      )}
+      {budget && budget > 0 && (
+        <BalanceCard
+          title="Budget Report"
+          amount={budget}
+          icon={<HandCoins className="metricsIcon" />}
+          isBudgetCrossed={budget < expenses}
         />
       )}
     </div>

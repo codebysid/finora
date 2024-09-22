@@ -68,6 +68,14 @@
   }
 }
 
+.navItemIcon {
+  @apply w-6 h-6;
+}
+
+.metricsIcon {
+  @apply lg:h-10 lg:w-10 text-primary opacity-60;
+}
+
 .input {
   @apply lg:text-2xl lg:px-4 lg:py-6;
 }

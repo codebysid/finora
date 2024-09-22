@@ -10,28 +10,33 @@ import {
 
 import Link from "next/link";
 import { getCurrentMonthAndYear } from "@/utils/helper";
+import BudgetDialog from "./BudgetDialog";
 
 const { month, year } = getCurrentMonthAndYear();
-const navItemIconStyles = "w-6 h-6";
 const navItems = new Set([
-  {
-    id: 2,
-    title: "Set Goal",
-    icon: <Goal className={navItemIconStyles} />,
-  },
   {
     id: 3,
     title: "Set budget",
-    icon: <WalletMinimal className={navItemIconStyles} />,
+    icon: (
+      <BudgetDialog
+        triggerText={
+          <p className="hidden lg:block lg:text-xl whitespace-nowrap hover:underline hover:underline-offset-8">
+            Set Budget
+          </p>
+        }
+        triggerIcon={<WalletMinimal className="lg:hidden navItemIcon" />}
+      />
+    ),
+    dialog: true,
   },
   {
     id: 1,
     title: "Add transaction",
-    icon: <BadgePlus className={navItemIconStyles} />,
+    icon: <BadgePlus className="navItemIcon" />,
     link: "/add",
   },
   {
-    id: 4,
+    id: 2,
     title: "All Transactions",
     icon: <TableOfContents />,
     link: `/allTransactions/${month}/${year}`,
@@ -51,7 +56,7 @@ function Navbar() {
                     <NavItem
                       icon={item.icon}
                       title={item.title}
-                      active={item.id === 1}
+                      dialog={item?.dialog}
                     />
                   </Link>
                 </NavigationMenuLink>
