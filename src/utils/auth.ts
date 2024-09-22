@@ -2,12 +2,13 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import connectToMongo from "./connectToMongo";
 import User from "@/models/User";
+import authConfig from "./auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  providers: [Google],
+  ...authConfig,
   callbacks: {
     async signIn({ user }) {
       console.log("callback hu mai", user);
