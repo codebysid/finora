@@ -88,6 +88,24 @@
     @apply h-10 w-10 lg:w-16 lg:h-16;
 }
 
+.textGradientAnimation:hover {
+    background: linear-gradient(to right, #00b4db, #3b82f6, #00b4db);
+    text-shadow:
+        0 0 7px #3b82f6,
+        0 0 151px #00b4db;
+    transition: all 0.5s;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: moveGradient 1s linear infinite;
+}
+
+@keyframes moveGradient {
+    to {
+        background-position: 200% center;
+    }
+}
+
 @media only screen and (max-width: 767px) {
     .heroSection {
         box-shadow:

@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,6 +32,7 @@ const formSchema = z.object({
 
 function AddTransaction() {
   const session = useSession();
+  const [disableAddBtn, setDisableAddBtn] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,6 +44,7 @@ function AddTransaction() {
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setDisableAddBtn(true);
       const res = await addTransaction({
         ...values,
         email: session.data?.user?.email,
@@ -51,9 +53,11 @@ function AddTransaction() {
         form.reset();
         return toast("Transaction Added ✅");
       }
+      setDisableAddBtn(false);
       return toast("Not able to save transaction at the moment 😢");
     } catch (err) {
       console.log(err);
+      setDisableAddBtn(false);
       return toast("Some error occurred 🙆");
     }
   };
@@ -127,6 +131,7 @@ function AddTransaction() {
               type="submit"
               variant="secondary"
               className=" w-full lg:h-14"
+              disabled={disableAddBtn}
             >
               Add
             </Button>
