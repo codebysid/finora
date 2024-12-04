@@ -10,7 +10,7 @@ export default function Home() {
     <div className=" h-[100vh]">
       <GithubStarBtn />
       <Hero />
-      <ThreeDCardDemo />
+      {/* <ThreeDCardDemo /> */}
       <div className="p-10 flex flex-col justify-center items-center gap-16 lg:gap-40">
         <Features />
         <WhyToUse />
