@@ -6,6 +6,9 @@ const nextConfig = {
     }
     return config;
   },
+  images: {
+    domains: ["images.unsplash.com"],
+  },
 };
 
 export default nextConfig;
