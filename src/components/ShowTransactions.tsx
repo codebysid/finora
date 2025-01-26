@@ -33,14 +33,13 @@ interface IShowTransaction {
 }
 
 function ShowTransactions({ transactions }: IShowTransaction) {
-  const { month, year } = getCurrentMonthAndYear();
+  // const { month, year } = getCurrentMonthAndYear();
   return (
     <>
       <div className="pt-10">
         <div
-          className={`${
-            transactions && transactions.length <= 10 && "h-[47vh]"
-          } overflow-y-auto lg:px-8`}
+          className={`${transactions && transactions.length <= 10 && "h-[47vh]"
+            } overflow-y-auto lg:px-8`}
         >
           {transactions && transactions.length > 0 ? (
             <Table>
@@ -77,7 +76,7 @@ function ShowTransactions({ transactions }: IShowTransaction) {
       <div className="flex justify-center items-center pt-4">
         {transactions && transactions.length <= 10 && (
           <Button variant="secondary" asChild>
-            <Link href={`/allTransactions/${month}/${year}`}>
+            <Link href={`/allTransactions/${null}/${null}`}>
               View All Transactions
             </Link>
           </Button>

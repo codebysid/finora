@@ -47,7 +47,7 @@ export default function WhyToUse() {
               whileInView={{ opacity: 1 }}
               key={ele.id}
               className={`bg-gradient-to-br from-[#000428] to-[#004e92] flex-1 p-4 flex flex-row lg:w-[45%] gap-2 rounded-2xl lg:absolute ${ele.id % 2 === 0 ? `lg:left-0` : `lg:right-0`}`}
-              style={{ top: `${ele.id * 240}px` }}
+              style={{ top: `${ele.id * 170}px` }}
             >
               {ele.icon}
               <div className="flex flex-col gap-1 justify-center">

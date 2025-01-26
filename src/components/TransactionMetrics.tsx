@@ -70,14 +70,14 @@ async function TransactionMetrics({ transactions }: IShowTransaction) {
           icon={<BadgeIndianRupee className="metricsIcon" />}
         />
       )}
-      {budget && budget > 0 && (
+      {budget && budget > 0 ? (
         <BalanceCard
           title="Budget Report"
           amount={budget}
           icon={<HandCoins className="metricsIcon" />}
           isBudgetCrossed={budget < expenses}
         />
-      )}
+      ) : ""}
     </div>
   );
 }
