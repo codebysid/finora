@@ -39,7 +39,7 @@ const navItems = new Set([
     id: 2,
     title: "All Transactions",
     icon: <TableOfContents />,
-    link: `/allTransactions/${month}/${year}`,
+    link: `/allTransactions/${null}/${null}`,
   },
 ]);
 
